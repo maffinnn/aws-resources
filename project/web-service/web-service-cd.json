@@ -1,0 +1,24 @@
+[
+    {
+        "name": "web-service-container",
+        "image": "203630641684.dkr.ecr.ap-southeast-1.amazonaws.com/web-service-govtech-tap:latest",
+        "cpu": 1024,
+        "memoryReservation": 2048,
+        "portMappings": [
+            {
+                "containerPort": 3000,
+                "hostPort": 0,
+                "protocol": "tcp"
+            }
+        ],
+        "essential": true,
+        "environment": [
+            {
+                "name": "ENVIRONMENT",
+                "value": "prod"
+            }
+        ],
+        "mountPoints": [],
+        "volumesFrom": []
+    }
+]
