@@ -24,6 +24,7 @@ resource "aws_ecs_service" "ecs_service" {
     container_name   = var.container_name
     container_port   = var.container_port
   }
+
   deployment_circuit_breaker {
     enable   = var.enable_deployment_circuit_breaker
     rollback = var.enable_rollback

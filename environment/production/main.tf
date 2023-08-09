@@ -34,12 +34,6 @@ module "networking" {
 }
 
 
-module "ecs" {
-  source       = "../../modules/ecs"
-  environment  = "prod"
-  cluster_name = "prod-ap-southeast-1-ecs"
-}
-
 module "elb" {
   source                = "../../modules/elb"
   environment           = "prod"

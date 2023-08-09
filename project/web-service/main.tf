@@ -15,6 +15,13 @@ data "terraform_remote_state" "Global" {
 }
 
 
+module "ecs" {
+  source       = "../../modules/ecs"
+  environment  = "prod"
+  cluster_name = "prod-ap-southeast-1-ecs"
+}
+
+
 module "ec2" {
   source                  = "../../modules/ec2"
   ami_owner               = "137112412989"
@@ -27,18 +34,18 @@ module "ec2" {
   security_group_lt       = "sg-024dd73b3c06df59e"
   instance_name           = "prod-ecs-ap-southeast-1-node"
   user_data               = filebase64("user_data.sh")
-  asg_name                = "prod-ecs-ap-southeast-1-asg"
+  asg_name                = "web-service-govtech-tap"
   min_size                = 1
   desired_capacity        = 2
   max_size                = 5
   service_linked_role_arn = "arn:aws:iam::203630641684:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling_0"
-  subnet_ids              = ["subnet-0a7c1d91ba320e184", "subnet-0f0f7fb7bce9d1add"]
+  subnet_ids              = ["subnet-079a11653336fd9ca", "subnet-03ab8568049ea3c8b"]
 }
 
 
 module "ecs-service" {
   source                            = "../../modules/ecs-service"
-  ecs_cluster_id                    = "prod-ap-southeast-1-ecs"
+  ecs_cluster_id                    = module.ecs.ecs_cluster_id
   task_family                       = "web-service"
   container_definitions             = file("web-service-cd.json")
   service_name                      = "web-service"
